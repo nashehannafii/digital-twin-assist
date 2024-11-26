@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "686780386861",
+    "project_id": "digital-twin-personal-assist",
+    "storage_bucket": "digital-twin-personal-assist.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686780386861:android:959436e50f563b482f32a4",
+        "android_client_info": {
+          "package_name": "com.example.digitaltwinpersonalassist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOY73AUyPsdoQ4ynhzUIMkn5JobXmvSpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
