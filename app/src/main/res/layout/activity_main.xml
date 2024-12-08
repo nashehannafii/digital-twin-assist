@@ -140,6 +140,88 @@
 Ï
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <!-- Card untuk Rekapitulasi Pekanan -->
+                <TextView
+                    android:id="@+id/textViewRekapitulasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Heartbeat Summary"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/textViewPekanan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Average Daily Heartbeat Rate"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChartWeekly"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="8dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Card untuk Rekapitulasi Bulanan -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="100dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/textViewBulanan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Average Weekly Heartbeat Rate"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChartMonthly"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="8dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 

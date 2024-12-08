@@ -52,4 +52,16 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
     implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.3.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
 }

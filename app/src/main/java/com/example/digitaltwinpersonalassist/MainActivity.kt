@@ -6,10 +6,13 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,10 +21,30 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.digitaltwinpersonalassist.services.api.ApiClient
+import com.example.digitaltwinpersonalassist.services.api.ApiService
+import com.example.digitaltwinpersonalassist.services.network.datasource.HelloDS
+import com.example.digitaltwinpersonalassist.services.network.datasource.RDailyDS
+import com.example.digitaltwinpersonalassist.services.network.remote.HelloRDS
+import com.example.digitaltwinpersonalassist.services.network.remote.RDailyRDS
+import com.example.digitaltwinpersonalassist.services.repository.HelloRepo
+import com.example.digitaltwinpersonalassist.services.repository.RDailyRepo
 import org.json.JSONObject
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.Random
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +56,9 @@ class MainActivity : AppCompatActivity() {
     private val notificationManager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
     private val channelId = "heartbeat_channel"
 
+    private lateinit var apiService:ApiService
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,12 +78,108 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+
+        apiService = ApiClient().getCLient().create(ApiService::class.java)
+        val helloDs = HelloRDS(apiService)
+        val helloRepo = HelloRepo(helloDs)
+
+        val rDailyDs = RDailyRDS(apiService)
+        val rDailyRepo = RDailyRepo(rDailyDs)
+
+        helloRepo.getData(object : HelloDS.HelloCallback {
+            override fun onLoaded(msg: String) {
+            }
+            override fun onError(msg: String) {
+            }
+        })
+        rDailyRepo.getData("4", "11", object : RDailyDS.RDailyCallback {
+            override fun onLoaded(msg: String) {
+            }
+            override fun onError(msg: String) {
+            }
+
+        })
+
         createNotificationChannel()
 
         loadSimulatedData()
         startRealtimeSimulation()
+
+        tesData()
     }
 
+    private fun tesData(){
+
+        val barChartWeekly = findViewById<BarChart>(R.id.barChartWeekly)
+        val barChartMonthly = findViewById<BarChart>(R.id.barChartMonthly)
+
+        val weeklyEntries = listOf(
+            BarEntry(1f, 72f),
+            BarEntry(2f, 75f),
+            BarEntry(3f, 70f),
+            BarEntry(4f, 73f),
+            BarEntry(5f, 74f),
+            BarEntry(6f, 71f),
+            BarEntry(7f, 69f)
+        )
+
+        val monthlyEntries = listOf(
+            BarEntry(1f, 70f),
+            BarEntry(2f, 72f),
+            BarEntry(3f, 68f),
+            BarEntry(4f, 74f)
+        )
+
+        val weeklyDataSet = BarDataSet(weeklyEntries, "Pekan Ini")
+        val monthlyDataSet = BarDataSet(monthlyEntries, "Bulan Ini")
+
+        weeklyDataSet.color = ContextCompat.getColor(this, R.color.darkGreen)
+        monthlyDataSet.color = ContextCompat.getColor(this, R.color.grey)
+
+        barChartWeekly.data = BarData(weeklyDataSet)
+        barChartMonthly.data = BarData(monthlyDataSet)
+
+        val maxWeekly = weeklyEntries.maxOf { it.y }
+        val maxMonthly = monthlyEntries.maxOf { it.y }
+        val maxHeartRate = maxOf(maxWeekly, maxMonthly) + 10f // Tambahkan margin 10
+
+        val daysOfWeek = arrayOf("", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu")
+        barChartWeekly.xAxis.apply {
+            valueFormatter = IndexAxisValueFormatter(daysOfWeek)
+            granularity = 1f
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawGridLines(false)
+        }
+
+        barChartWeekly.axisLeft.apply {
+            axisMinimum = 0f
+            axisMaximum = maxHeartRate
+        }
+        barChartWeekly.axisRight.isEnabled = false
+
+        barChartWeekly.description.text = ""
+        barChartWeekly.description.textSize = 12f
+
+        barChartMonthly.xAxis.apply {
+            valueFormatter = IndexAxisValueFormatter(arrayOf("", "Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"))
+            granularity = 1f
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawGridLines(false)
+        }
+
+        barChartMonthly.axisLeft.apply {
+            axisMinimum = 0f
+            axisMaximum = maxHeartRate // Batas maksimum detak jantung
+        }
+        barChartMonthly.axisRight.isEnabled = false // Nonaktifkan sumbu Y kanan
+
+        barChartMonthly.description.text = ""
+        barChartMonthly.description.textSize = 12f
+
+        barChartWeekly.invalidate()
+        barChartMonthly.invalidate()
+
+    }
 
     private fun loadSimulatedData() {
         val jsonData = loadJSONFromAsset("patient_data.json")
@@ -98,7 +220,7 @@ class MainActivity : AppCompatActivity() {
                 currentIndex++
                 handler.postDelayed(this, 1000)
             }
-        }, 500)
+        }, 1000)
     }
 
     private fun updateUI(heartbeat: Int) {
@@ -109,7 +231,6 @@ class MainActivity : AppCompatActivity() {
         textViewHeartbeat.text = "Heartbeat"
         textViewBpm.text = "$heartbeat BPM"
 
-        // Menentukan status berdasarkan detak jantung
         val status = when {
             heartbeat < 60 -> "Rendah"
             heartbeat in 60..100 -> "Normal"
@@ -118,7 +239,6 @@ class MainActivity : AppCompatActivity() {
 
         textViewStatus.text = "Status: $status"
 
-        // Menentukan warna latar belakang berdasarkan status
         when (status) {
             "Normal" -> textViewStatus.setBackgroundColor(resources.getColor(R.color.statusGreen)) // Normal
             "Tinggi" -> textViewStatus.setBackgroundColor(resources.getColor(R.color.statusRed))   // Tinggi
@@ -127,12 +247,12 @@ class MainActivity : AppCompatActivity() {
 
         when {
             heartbeat > 120 -> {
-                sendHeartbeatNotification("Tinggi", heartbeat)
-                sendActivityWarningNotification()
+//                sendHeartbeatNotification("Tinggi", heartbeat)
+//                sendActivityWarningNotification()
             }
             heartbeat < 60 -> {
-                sendHeartbeatNotification("Rendah", heartbeat)
-                sendLowBloodWarningNotification()
+//                sendHeartbeatNotification("Rendah", heartbeat)
+//                sendLowBloodWarningNotification()
             }
             else -> {
             }
@@ -147,7 +267,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.star) // Anda bisa mengganti dengan ikon yang sesuai
+            .setSmallIcon(R.drawable.star)
             .setContentTitle("Peringatan Detak Jantung $status!")
             .setContentText(notificationText)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -159,7 +279,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendActivityWarningNotification() {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.star) // Anda bisa mengganti dengan ikon yang sesuai
+            .setSmallIcon(R.drawable.star)
             .setContentTitle("Peringatan Aktivitas!")
             .setContentText("Detak jantung Anda terlalu tinggi. Kurangi intensitas aktivitas!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -171,7 +291,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendLowBloodWarningNotification() {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.star) // Anda bisa mengganti dengan ikon yang sesuai
+            .setSmallIcon(R.drawable.star)
             .setContentTitle("Peringatan Detak Jantung Rendah!")
             .setContentText("Detak jantung Anda rendah: Pastikan untuk beristirahat dan periksa kondisi Anda!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -192,4 +312,5 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
 }
