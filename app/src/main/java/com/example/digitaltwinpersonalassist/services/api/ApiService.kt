@@ -2,6 +2,7 @@ package com.example.digitaltwinpersonalassist.services.api
 
 import com.example.digitaltwinpersonalassist.services.models.HelloModel
 import com.example.digitaltwinpersonalassist.services.models.RDailyModel
+import com.example.digitaltwinpersonalassist.services.models.RWeeklyModel
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -20,5 +21,5 @@ interface ApiService {
 
     @GET("/rekap-harian-perpekan")
     fun getRekap(@Query("week") week: String, @Query("month") month: String):
-            Call<HelloModel>
+            Call<RWeeklyModel>
 }

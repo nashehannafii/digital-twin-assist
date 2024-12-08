@@ -23,12 +23,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.digitaltwinpersonalassist.services.api.ApiClient
 import com.example.digitaltwinpersonalassist.services.api.ApiService
+import com.example.digitaltwinpersonalassist.services.models.DayData
 import com.example.digitaltwinpersonalassist.services.network.datasource.HelloDS
 import com.example.digitaltwinpersonalassist.services.network.datasource.RDailyDS
+import com.example.digitaltwinpersonalassist.services.network.datasource.RWeeklyDS
 import com.example.digitaltwinpersonalassist.services.network.remote.HelloRDS
 import com.example.digitaltwinpersonalassist.services.network.remote.RDailyRDS
+import com.example.digitaltwinpersonalassist.services.network.remote.RWeeklyRDS
 import com.example.digitaltwinpersonalassist.services.repository.HelloRepo
 import com.example.digitaltwinpersonalassist.services.repository.RDailyRepo
+import com.example.digitaltwinpersonalassist.services.repository.RWeeklyRepo
 import org.json.JSONObject
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -58,11 +62,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var apiService:ApiService
 
+    lateinit var barChartWeekly : BarChart
+    lateinit var barChartMonthly : BarChart
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        barChartWeekly = findViewById<BarChart>(R.id.barChartWeekly)
+        barChartMonthly = findViewById<BarChart>(R.id.barChartMonthly)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
@@ -86,6 +96,9 @@ class MainActivity : AppCompatActivity() {
         val rDailyDs = RDailyRDS(apiService)
         val rDailyRepo = RDailyRepo(rDailyDs)
 
+        val rWeeklyDs = RWeeklyRDS(apiService)
+        val rWeeklyRepo = RWeeklyRepo(rWeeklyDs)
+
         helloRepo.getData(object : HelloDS.HelloCallback {
             override fun onLoaded(msg: String) {
             }
@@ -94,11 +107,39 @@ class MainActivity : AppCompatActivity() {
         })
         rDailyRepo.getData("4", "11", object : RDailyDS.RDailyCallback {
             override fun onLoaded(msg: String) {
+
+            }
+            override fun onError(msg: String) {
+            }
+        })
+        rWeeklyRepo.getData("1","12", object : RWeeklyDS.RWeeklyCallback {
+            override fun onLoaded(data: Map<String, DayData>) {
+                val dataMap = mutableListOf<BarEntry>()
+
+                var i = 0
+                for (k in data.keys)
+                {
+                    if (i == 7)
+                        break
+
+                    dataMap.add(BarEntry(k.toFloat(), data[k]?.averageHeartbeatRate ?: 0f))
+
+                    i++;
+                }
+
+                val weeklyDataSet = BarDataSet(dataMap, "Pekan Ini")
+
+                weeklyDataSet.color = ContextCompat.getColor(this@MainActivity, R.color.darkGreen)
+
+                barChartWeekly.data = BarData(weeklyDataSet)
+
+                barChartWeekly.invalidate()
             }
             override fun onError(msg: String) {
             }
 
         })
+
 
         createNotificationChannel()
 
@@ -110,17 +151,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun tesData(){
 
-        val barChartWeekly = findViewById<BarChart>(R.id.barChartWeekly)
-        val barChartMonthly = findViewById<BarChart>(R.id.barChartMonthly)
-
         val weeklyEntries = listOf(
-            BarEntry(1f, 72f),
-            BarEntry(2f, 75f),
-            BarEntry(3f, 70f),
-            BarEntry(4f, 73f),
-            BarEntry(5f, 74f),
-            BarEntry(6f, 71f),
-            BarEntry(7f, 69f)
+            BarEntry(1f, 0f),
+            BarEntry(2f, 0f),
+            BarEntry(3f, 0f),
+            BarEntry(4f, 0f),
+            BarEntry(5f, 0f),
+            BarEntry(6f, 0f),
+            BarEntry(7f, 0f)
         )
 
         val monthlyEntries = listOf(
@@ -141,7 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         val maxWeekly = weeklyEntries.maxOf { it.y }
         val maxMonthly = monthlyEntries.maxOf { it.y }
-        val maxHeartRate = maxOf(maxWeekly, maxMonthly) + 10f // Tambahkan margin 10
+        val maxHeartRate = 105f // Tambahkan margin 10
 
         val daysOfWeek = arrayOf("", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu")
         barChartWeekly.xAxis.apply {
@@ -152,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         barChartWeekly.axisLeft.apply {
-            axisMinimum = 0f
+            axisMinimum = 75f
             axisMaximum = maxHeartRate
         }
         barChartWeekly.axisRight.isEnabled = false
