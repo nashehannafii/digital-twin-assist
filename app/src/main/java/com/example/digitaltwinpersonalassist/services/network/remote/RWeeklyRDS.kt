@@ -25,5 +25,4 @@ class RWeeklyRDS(private val apiService: ApiService) : RWeeklyDS {
                 }
             })
     }
-
 }

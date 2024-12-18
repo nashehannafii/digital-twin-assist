@@ -62,6 +62,12 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
+    // grafix
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
+
+    // Wave Graph
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("org.rajawali3d:rajawali:1.1.777")
 }

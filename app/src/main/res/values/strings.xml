@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">Digital Twin Personal Assist</string>
+    <string name="app_name">Cardiva</string>
     <string name="personal_assistant_ndigital_cockpit_nhuman_digital_twin">Personal Assistant \nDigital Cockpit \n<font color='#1FC29D'>Human Digital Twin</font></string>
     <string name="get_started">Get Started</string>
     <string name="human_digital_twin_is_the_future">Human digital twin is the future</string>
     <string name="hi_fulan">Hi, Nasheh Annafii</string>
-    <string name="how_is_your_health">How is your health?</string>
+    <string name="how_is_your_health">Your Health, Digitally Connected</string>
     <string name="health_issue">Health issue</string>
+    <string name="our_cardiva">Our Cardiva</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
