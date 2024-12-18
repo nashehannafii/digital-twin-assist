@@ -50,21 +50,22 @@ class RecapFragment : Fragment() {
         barChartMonthly = view.findViewById<BarChart>(R.id.barChartMonthly)
 
         apiService = ApiClient().getCLient().create(ApiService::class.java)
-        val helloDs = HelloRDS(apiService)
-        val helloRepo = HelloRepo(helloDs)
+//        val helloDs = HelloRDS(apiService)
+//        val helloRepo = HelloRepo(helloDs)
+
+//        helloRepo.getData(object : HelloDS.HelloCallback {
+//            override fun onLoaded(msg: String) {
+//            }
+//            override fun onError(msg: String) {
+//            }
+//        })
+
 
         val rDailyDs = RDailyRDS(apiService)
         val rDailyRepo = RDailyRepo(rDailyDs)
 
         val rWeeklyDs = RWeeklyRDS(apiService)
         val rWeeklyRepo = RWeeklyRepo(rWeeklyDs)
-
-        helloRepo.getData(object : HelloDS.HelloCallback {
-            override fun onLoaded(msg: String) {
-            }
-            override fun onError(msg: String) {
-            }
-        })
 
         rDailyRepo.getData("4", "11", object : RDailyDS.RDailyCallback {
             override fun onLoaded(msg: String) {
@@ -96,12 +97,12 @@ class RecapFragment : Fragment() {
         })
 
         loadSimulatedData()
-        tesData()
+        currentData()
 
         return view
     }
 
-    private fun tesData(){
+    private fun currentData(){
         val weeklyEntries = listOf(
             BarEntry(1f, 0f),
             BarEntry(2f, 0f),
