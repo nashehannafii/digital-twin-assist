@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.stat -> StatFragment()
                     R.id.recap -> RecapFragment()
                     R.id.profile -> ProfileFragment()
+                    R.id.loader -> LoaderFragment()
                     else -> HomeFragment()
                 }
 

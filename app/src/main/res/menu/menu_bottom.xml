@@ -22,5 +22,10 @@
         android:title="Profile"
         app:cnb_backgroundColor="@color/darkGreen"
         app:cnb_iconColor="@color/white" />
+    <item android:id="@+id/loader"
+        android:icon="@drawable/bottom_btn4"
+        android:title="Loader"
+        app:cnb_backgroundColor="@color/darkGreen"
+        app:cnb_iconColor="@color/white" />
 
 </menu>

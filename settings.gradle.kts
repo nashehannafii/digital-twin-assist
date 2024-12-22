@@ -27,3 +27,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Digital Twin Personal Assist"
 include(":app")
+include(":engine")
