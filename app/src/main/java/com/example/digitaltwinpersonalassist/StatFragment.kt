@@ -15,6 +15,12 @@ import com.github.mikephil.charting.data.LineDataSet
 import java.util.Random
 
 
+/**
+ * Fragment yang menampilkan grafik garis berisi simulasi ECG/ECG-like waveform.
+ *
+ * Fragment ini menyiapkan `LineChart` dan melakukan update data secara realtime
+ * (interval 50ms) untuk memberikan tampilan gelombang serupa ECG.
+ */
 class StatFragment : Fragment() {
     private lateinit var view : View
 
@@ -26,6 +32,9 @@ class StatFragment : Fragment() {
     private val randomLC2 = Random()
     private var timeLC2 = 0
 
+    /**
+     * Membuat view, menginisialisasi chart, dan memulai pembaruan realtime.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +50,9 @@ class StatFragment : Fragment() {
         return view
     }
 
+    /**
+     * Konfigurasi awal chart dan dataset.
+     */
     private fun setupChart() {
         lineDataSetLC2 = createLineDataSet()
         lineDataLC2 = LineData(lineDataSetLC2)
@@ -63,6 +75,11 @@ class StatFragment : Fragment() {
         }
     }
 
+    /**
+     * Membuat `LineDataSet` dengan gaya visual untuk waveform.
+     *
+     * @return LineDataSet yang dikonfigurasi.
+     */
     private fun createLineDataSet(): LineDataSet {
         return LineDataSet(dataPointsLC2, "ECG Waveform").apply {
             lineWidth = 3f // Garis lebih tebal
@@ -72,6 +89,9 @@ class StatFragment : Fragment() {
         }
     }
 
+    /**
+     * Memulai loop update realtime untuk menambahkan titik data dan me-refresh chart.
+     */
     private fun startRealTimeUpdates() {
         handlerLC2.post(object : Runnable {
             override fun run() {
@@ -82,10 +102,16 @@ class StatFragment : Fragment() {
         })
     }
 
+    /**
+     * Menghentikan pembaruan realtime dengan menghapus callbacks handler.
+     */
     private fun stopRealTimeUpdates() {
         handlerLC2.removeCallbacksAndMessages(null)
     }
 
+    /**
+     * Memaksa chart untuk memperbarui tampilannya setelah data berubah.
+     */
     private fun updateChart() {
         lineDataSetLC2.notifyDataSetChanged()
         lineDataLC2.notifyDataChanged()
@@ -93,6 +119,9 @@ class StatFragment : Fragment() {
         lineChartLC2.invalidate()
     }
 
+    /**
+     * Menambahkan satu titik data ECG ke dataset, dan menjaga ukuran dataset.
+     */
     private fun addECGDataPoint() {
         val x = timeLC2 * 0.1 // Skala waktu untuk memperlambat ritme
         val ecgValue = generateECGRhythm(x)
@@ -105,6 +134,12 @@ class StatFragment : Fragment() {
         }
     }
 
+    /**
+     * Menghasilkan nilai ECG-like berdasarkan fungsi gelombang sederhana.
+     *
+     * @param x Parameter waktu (skala) untuk fungsi gelombang.
+     * @return Nilai amplitudo sebagai Float.
+     */
     private fun generateECGRhythm(x: Double): Float {
         return when {
             // Simulasi P-wave (gelombang kecil sebelum QRS)

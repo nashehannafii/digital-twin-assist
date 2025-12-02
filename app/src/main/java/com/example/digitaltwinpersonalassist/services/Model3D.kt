@@ -5,6 +5,12 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
+/**
+ * Model3D sederhana yang menggambar sebuah segitiga menggunakan OpenGL ES 2.0.
+ *
+ * Kelas ini menyiapkan shader, buffer vertex, dan menyediakan fungsi `draw()`
+ * untuk menggambar segitiga berwarna.
+ */
 class Model3D {
 
     private val triangleCoords = floatArrayOf(
@@ -55,6 +61,9 @@ class Model3D {
         }
     }
 
+    /**
+     * Menggambar segitiga ke layar menggunakan program/shader yang telah dibuat.
+     */
     fun draw() {
         // Gunakan program yang sudah dibuat
         GLES20.glUseProgram(program)
@@ -77,6 +86,13 @@ class Model3D {
         GLES20.glDisableVertexAttribArray(positionHandle)
     }
 
+    /**
+     * Membuat dan meng-compile shader dari source code.
+     *
+     * @param type Tipe shader (vertex/fragment), mis. `GLES20.GL_VERTEX_SHADER`.
+     * @param shaderCode Source code shader GLSL.
+     * @return handle shader yang telah dibuat.
+     */
     private fun loadShader(type: Int, shaderCode: String): Int {
         return GLES20.glCreateShader(type).also { shader ->
             GLES20.glShaderSource(shader, shaderCode)

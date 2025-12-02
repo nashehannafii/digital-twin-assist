@@ -18,9 +18,23 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 
+/**
+ * Fragment yang menampilkan profil pengguna.
+ *
+ * Saat ini berfungsi sebagai placeholder dan menyiapkan view dari layout
+ * `fragment_profile`.
+ */
 class ProfileFragment : Fragment() {
     private lateinit var view : View
 
+    /**
+     * Membuat dan mengembalikan view untuk fragment ini.
+     *
+     * @param inflater LayoutInflater untuk meng-inflate layout.
+     * @param container ViewGroup parent atau null.
+     * @param savedInstanceState Bundle berisi state sebelumnya atau null.
+     * @return View yang di-inflate untuk fragment ini.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

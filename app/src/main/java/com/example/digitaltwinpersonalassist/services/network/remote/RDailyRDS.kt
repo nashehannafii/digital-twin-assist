@@ -7,6 +7,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Remote data source untuk rekap harian per jam.
+ */
 class RDailyRDS(private val apiService: ApiService) : RDailyDS {
     override fun getData(date: String, month: String, callback: RDailyDS.RDailyCallback) {
         apiService.getRekapDaily(date, month)

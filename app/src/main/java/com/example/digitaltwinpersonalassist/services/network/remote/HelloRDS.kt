@@ -9,6 +9,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Remote data source untuk endpoint "hello".
+ *
+ * Menggunakan `ApiService.getData()` dan meneruskan hasil melalui callback.
+ */
 class HelloRDS(private val apiService: ApiService) : HelloDS {
     @SuppressLint("CheckResult")
     override fun getData(callback: HelloDS.HelloCallback) {

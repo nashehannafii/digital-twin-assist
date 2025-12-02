@@ -30,6 +30,13 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 
+/**
+ * Fragment yang menampilkan ringkasan (recap) data harian/mingguan/bulanan.
+ *
+ * Fragment ini memuat data dari API (via repository/remote/datasource) dan juga
+ * menyediakan data simulasi dari aset `patient_data.json` untuk menampilkan
+ * grafik batang mingguan dan bulanan.
+ */
 class RecapFragment : Fragment() {
     private lateinit var view : View
     private val simulatedData = mutableListOf<Int>()
@@ -38,6 +45,9 @@ class RecapFragment : Fragment() {
     private lateinit var apiService: ApiService
 
 
+    /**
+     * Inisialisasi view, chart, dan pemanggilan repository untuk mengambil data.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -102,6 +112,10 @@ class RecapFragment : Fragment() {
         return view
     }
 
+    /**
+     * Menyusun data statis/simuluasi untuk chart mingguan dan bulanan dan
+     * menerapkannya ke `BarChart`.
+     */
     private fun currentData(){
         val weeklyEntries = listOf(
             BarEntry(1f, 0f),
@@ -166,6 +180,10 @@ class RecapFragment : Fragment() {
 
     }
 
+    /**
+     * Memuat data simulasi dari asset JSON `patient_data.json` dan menyimpannya
+     * ke `simulatedData`.
+     */
     private fun loadSimulatedData() {
         val jsonData = loadJSONFromAsset("patient_data.json")
         if (jsonData != null) {
@@ -179,6 +197,12 @@ class RecapFragment : Fragment() {
         }
     }
 
+    /**
+     * Membaca sebuah file JSON dari folder `assets` dan mengembalikan isinya.
+     *
+     * @param fileName Nama file di `assets`.
+     * @return Konten JSON sebagai String, atau null jika gagal.
+     */
     private fun loadJSONFromAsset(fileName: String): String? {
         var json: String? = null
         try {

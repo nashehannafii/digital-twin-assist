@@ -14,6 +14,13 @@ import org.rajawali3d.materials.Material
 import org.rajawali3d.primitives.Sphere
 
 
+/**
+ * Contoh renderer Rajawali untuk menampilkan model 3D jantung.
+ *
+ * Implementasi saat ini dikomentari karena library Rajawali mungkin belum
+ * dikonfigurasi pada proyek. File ini berfungsi sebagai referensi jika ingin
+ * mengaktifkan renderer 3D berbasis Rajawali di masa depan.
+ */
 //class Heart3DRenderer(context: Context) : RajawaliRenderer(context) {
 //    override fun initScene() {
 //        // Tambahkan pencahayaan
@@ -37,5 +44,5 @@ import org.rajawali3d.primitives.Sphere
 //            e.printStackTrace()
 //        }
 //    }
-
+//
 //}
