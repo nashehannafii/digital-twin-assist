@@ -5,8 +5,8 @@ import com.example.digitaltwinpersonalassist.services.models.DayData
 import com.example.digitaltwinpersonalassist.services.network.datasource.RWeeklyDS
 
 /**
- * Repository untuk rekap mingguan. Mendelegasikan pemanggilan ke remote data
- * source dan meneruskan hasil melalui callback.
+ * Repository for weekly recap. Delegates calls to the remote data
+ * source and forwards results via the callback.
  */
 class RWeeklyRepo(private val remoteDS: RWeeklyDS) :RWeeklyDS {
     override fun getData(week: String, month: String, callback: RWeeklyDS.RWeeklyCallback) {

@@ -21,10 +21,10 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 /**
- * Fragment utama yang menampilkan simulasi detak jantung secara realtime.
+ * Main fragment that shows a realtime simulated heartbeat.
  *
- * Fragment ini menghasilkan nilai detak jantung simulasi, memperbarui UI,
- * dan menyediakan utilitas untuk membuat dan mengirim notifikasi terkait status.
+ * This fragment generates simulated heartbeat values, updates the UI,
+ * and provides utilities to create and send notifications related to status.
  */
 class HomeFragment : Fragment() {
 
@@ -40,8 +40,9 @@ class HomeFragment : Fragment() {
     private val channelId = "heartbeat_channel"
 
     /**
-     * Membuat view untuk fragment ini, menyiapkan handler dan meminta permission
-     * notifikasi bila diperlukan (Android 13+), lalu memulai simulasi realtime.
+     * Create the view for this fragment, set up the handler and request
+     * notification permission if needed (Android 13+), then start realtime
+     * simulation.
      */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +74,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Membersihkan callback handler saat view dihancurkan.
+     * Clean up handler callbacks when the view is destroyed.
      */
     override fun onDestroyView() {
         super.onDestroyView()
@@ -82,7 +83,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Memulai simulasi detak jantung berulang setiap 1 detik.
+     * Start a repeating heartbeat simulation every 1 second.
      */
     private fun startRealtimeSimulation() {
         handler.postDelayed(object : Runnable {
@@ -95,18 +96,18 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Menghasilkan nilai detak jantung acak dalam rentang 50..150.
+     * Generate a random heartbeat value in the range 50..150.
      *
-     * @return Int nilai detak jantung ter-simulasikan.
+     * @return Int simulated heartbeat value.
      */
     private fun generateHeartbeat(): Int {
         return (50..150).random()
     }
 
     /**
-     * Memperbarui elemen UI yang menampilkan detak jantung, BPM, dan status.
+     * Update the UI elements that display heartbeat, BPM, and status.
      *
-     * @param heartbeat nilai detak jantung untuk ditampilkan.
+     * @param heartbeat The heartbeat value to display.
      */
     private fun updateUI(heartbeat: Int) {
         val textViewHeartbeat = view.findViewById<TextView>(R.id.textViewHeartbeat)
@@ -148,10 +149,10 @@ class HomeFragment : Fragment() {
 
 
     /**
-     * Mengirim notifikasi peringatan detak jantung dengan konten tergantung status.
+     * Send a heartbeat alert notification with content depending on status.
      *
-     * @param status Status detak jantung (mis. "Tinggi", "Rendah").
-     * @param heartbeat Nilai detak jantung saat ini.
+     * @param status Heartbeat status (e.g. "High", "Low").
+     * @param heartbeat Current heartbeat value.
      */
     private fun sendHeartbeatNotification(status: String, heartbeat: Int) {
         val notificationText = when (status) {
@@ -172,7 +173,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Mengirim notifikasi peringatan aktivitas jika detak jantung terlalu tinggi.
+     * Send an activity warning notification when heartbeat is too high.
      */
     private fun sendActivityWarningNotification() {
         val notification = NotificationCompat.Builder(requireContext(), channelId) // Use requireContext()
@@ -187,7 +188,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Mengirim notifikasi peringatan jika detak jantung terlalu rendah.
+     * Send a low-heartbeat warning notification.
      */
     private fun sendLowBloodWarningNotification() {
         val notification = NotificationCompat.Builder(requireContext(), channelId) // Use requireContext()
@@ -202,7 +203,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Membuat channel notifikasi untuk Android O+.
+     * Create a notification channel for Android O and above.
      */
     private fun createNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

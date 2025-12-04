@@ -3,9 +3,9 @@ package com.example.digitaltwinpersonalassist.services.models
 import java.io.Serializable
 
 /**
- * Model data sederhana untuk respon hello dari API.
+ * Simple data model for the hello response from the API.
  *
- * @property message Pesan string yang dikembalikan server.
+ * @property message The message string returned by the server.
  */
 data class HelloModel (
     var message: String?

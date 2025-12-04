@@ -10,8 +10,8 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 /**
- * Contoh unit test lokal yang dijalankan pada mesin pengembangan.
- * Ini hanya test contoh untuk memastikan konfigurasi testing bekerja.
+ * Example local unit test that runs on the development machine.
+ * This is just a sample test to ensure the testing configuration works.
  */
 class ExampleUnitTest {
     @Test

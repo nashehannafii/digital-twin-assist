@@ -3,10 +3,10 @@ package com.example.digitaltwinpersonalassist.services.models
 import java.io.Serializable
 
 /**
- * Model data untuk rekap harian per jam dari API.
+ * Data model for daily recap per hour from the API.
  *
- * @property message Pesan atau status dari API.
- * @property data Struktur peta dengan kunci jam/label dan nilai metrik per jam.
+ * @property message Message or status from the API.
+ * @property data Map structure with hour/label keys and per-hour metric values.
  */
 data class RDailyModel(
     var message: String?,

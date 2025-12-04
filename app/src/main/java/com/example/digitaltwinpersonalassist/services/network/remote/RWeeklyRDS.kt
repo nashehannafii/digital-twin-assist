@@ -8,7 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Remote data source untuk rekap mingguan yang memanggil `ApiService`.
+ * Remote data source for weekly recap that calls `ApiService`.
  */
 class RWeeklyRDS(private val apiService: ApiService) : RWeeklyDS {
     override fun getData(week: String, month: String, callback: RWeeklyDS.RWeeklyCallback) {

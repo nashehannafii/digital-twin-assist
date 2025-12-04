@@ -31,11 +31,11 @@ import java.io.InputStreamReader
 
 
 /**
- * Fragment yang menampilkan ringkasan (recap) data harian/mingguan/bulanan.
+ * Fragment that displays a recap of daily/weekly/monthly data.
  *
- * Fragment ini memuat data dari API (via repository/remote/datasource) dan juga
- * menyediakan data simulasi dari aset `patient_data.json` untuk menampilkan
- * grafik batang mingguan dan bulanan.
+ * This fragment loads data from the API (via repository/remote/datasource)
+ * and also provides simulated data from the `patient_data.json` asset to
+ * display weekly and monthly bar charts.
  */
 class RecapFragment : Fragment() {
     private lateinit var view : View
@@ -46,7 +46,7 @@ class RecapFragment : Fragment() {
 
 
     /**
-     * Inisialisasi view, chart, dan pemanggilan repository untuk mengambil data.
+     * Initialize the view, charts, and invoke repositories to fetch data.
      */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -113,8 +113,8 @@ class RecapFragment : Fragment() {
     }
 
     /**
-     * Menyusun data statis/simuluasi untuk chart mingguan dan bulanan dan
-     * menerapkannya ke `BarChart`.
+     * Prepare static/simulated data for weekly and monthly charts and apply
+     * them to the `BarChart` instances.
      */
     private fun currentData(){
         val weeklyEntries = listOf(
@@ -181,8 +181,8 @@ class RecapFragment : Fragment() {
     }
 
     /**
-     * Memuat data simulasi dari asset JSON `patient_data.json` dan menyimpannya
-     * ke `simulatedData`.
+     * Load simulated data from the `patient_data.json` asset and store it in
+     * `simulatedData`.
      */
     private fun loadSimulatedData() {
         val jsonData = loadJSONFromAsset("patient_data.json")
@@ -198,10 +198,10 @@ class RecapFragment : Fragment() {
     }
 
     /**
-     * Membaca sebuah file JSON dari folder `assets` dan mengembalikan isinya.
+     * Read a JSON file from the `assets` folder and return its contents.
      *
-     * @param fileName Nama file di `assets`.
-     * @return Konten JSON sebagai String, atau null jika gagal.
+     * @param fileName Name of the file in `assets`.
+     * @return JSON content as a String, or null on failure.
      */
     private fun loadJSONFromAsset(fileName: String): String? {
         var json: String? = null

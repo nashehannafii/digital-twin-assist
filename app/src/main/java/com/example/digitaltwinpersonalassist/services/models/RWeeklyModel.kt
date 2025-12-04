@@ -3,10 +3,10 @@ package com.example.digitaltwinpersonalassist.services.models
 import java.io.Serializable
 
 /**
- * Model data untuk rekap mingguan dari API.
+ * Data model for weekly recap from the API.
  *
- * @property message Pesan atau status dari API.
- * @property data Peta hari -> data hari (`DayData`).
+ * @property message Message or status from the API.
+ * @property data Map of day keys to `DayData`.
  */
 data class RWeeklyModel(
     var message: String?,
@@ -14,10 +14,10 @@ data class RWeeklyModel(
 ): Serializable
 
 /**
- * Representasi data untuk satu hari dalam rekapan mingguan.
+ * Representation of data for a single day in the weekly recap.
  *
- * @property dayName Nama hari.
- * @property averageHeartbeatRate Rata-rata detak jantung pada hari tersebut.
+ * @property dayName The day name.
+ * @property averageHeartbeatRate The average heartbeat rate for that day.
  */
 data class DayData(
     var dayName: String?,

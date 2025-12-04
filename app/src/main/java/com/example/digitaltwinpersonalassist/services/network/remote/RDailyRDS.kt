@@ -8,7 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Remote data source untuk rekap harian per jam.
+ * Remote data source for daily recap per hour.
  */
 class RDailyRDS(private val apiService: ApiService) : RDailyDS {
     override fun getData(date: String, month: String, callback: RDailyDS.RDailyCallback) {

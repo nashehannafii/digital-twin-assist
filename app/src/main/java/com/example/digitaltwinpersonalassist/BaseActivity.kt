@@ -8,20 +8,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 /**
- * BaseActivity adalah activity dasar yang digunakan oleh activity lain di aplikasi.
+ * BaseActivity is the base activity used by other activities in the app.
  *
- * Activity ini mengatur flag window agar layout dapat mengambil area layar penuh
- * (mis. menampilkan konten di balik status bar / navigation bar) sehingga
- * child activities dapat mengimplementasikan tampilan edge-to-edge.
+ * This activity sets a window flag so the layout can take the full screen
+ * area (e.g. show content behind status/navigation bars) enabling child
+ * activities to implement edge-to-edge UI.
  */
 open class BaseActivity : AppCompatActivity() {
     /**
-     * Dipanggil saat Activity dibuat.
+     * Called when the Activity is created.
      *
-     * Fungsi ini hanya memanggil implementasi parent lalu mengatur flag window
-     * `FLAG_LAYOUT_NO_LIMITS` sehingga layout tidak dibatasi oleh area sistem.
+     * This method calls the parent implementation and sets the window flag
+     * `FLAG_LAYOUT_NO_LIMITS` so the layout is not constrained by system
+     * bars.
      *
-     * @param savedInstanceState Bundle berisi status sebelumnya, atau null.
+     * @param savedInstanceState Bundle with previous state, or null.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

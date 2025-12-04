@@ -3,28 +3,27 @@ package com.example.digitaltwinpersonalassist.services.network.datasource
 import com.example.digitaltwinpersonalassist.services.models.DayData
 
 /**
- * Abstraksi data source untuk rekap mingguan.
- * Implementasi harus memanggil `RWeeklyCallback` dengan data yang diperoleh atau
- * error bila gagal.
+ * Abstraction for the weekly recap data source.
+ * Implementations should call `RWeeklyCallback` with data or an error.
  */
 interface RWeeklyDS {
 
     /**
-     * Ambil data rekap mingguan untuk pekan dan bulan tertentu.
+     * Fetch weekly recap data for a specific week and month.
      */
     fun getData(week: String, month: String, callback: RWeeklyCallback)
 
     interface RWeeklyCallback {
         /**
-         * Dipanggil saat data berhasil diambil.
+         * Called when data is successfully loaded.
          *
-         * @param data Map dari kunci hari ke `DayData`.
+         * @param data Map from day key to `DayData`.
          */
         fun onLoaded(
             data: Map<String, DayData>
         )
         /**
-         * Dipanggil saat terjadi error.
+         * Called when an error occurs.
          */
         fun onError(msg: String)
     }

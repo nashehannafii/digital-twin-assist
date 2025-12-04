@@ -9,17 +9,17 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.digitaltwinpersonalassist.databinding.ActivitySplashBinding
 
 /**
- * Activity splash sederhana yang menampilkan tombol untuk masuk ke `MainActivity`.
+ * Simple splash Activity that shows a button to enter `MainActivity`.
  *
- * Menggunakan view binding `ActivitySplashBinding` untuk menghubungkan layout.
+ * Uses view binding `ActivitySplashBinding` to bind the layout.
  */
 class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding
 
     /**
-     * Inisialisasi tampilan splash dan mengatur listener tombol "Start".
+     * Initialize the splash view and set the "Start" button listener.
      *
-     * @param savedInstanceState Bundle berisi status sebelumnya, atau null.
+     * @param savedInstanceState Bundle with previous state, or null.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

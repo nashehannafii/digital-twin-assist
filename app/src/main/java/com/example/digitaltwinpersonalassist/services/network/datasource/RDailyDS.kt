@@ -1,22 +1,22 @@
 package com.example.digitaltwinpersonalassist.services.network.datasource
 
 /**
- * Abstraksi data source untuk rekap harian per jam.
+ * Abstraction for the daily-per-hour recap data source.
  */
 interface RDailyDS {
 
     /**
-     * Ambil data rekap harian untuk tanggal dan bulan tertentu.
+     * Fetch daily recap data for a given date and month.
      */
     fun getData(date: String, month: String, callback: RDailyCallback)
 
     interface RDailyCallback{
         /**
-         * Dipanggil saat data berhasil diambil (dalam bentuk String).
+         * Called when data is successfully loaded (as a String).
          */
         fun onLoaded(msg: String)
         /**
-         * Dipanggil saat terjadi error.
+         * Called when an error occurs.
          */
         fun onError(msg: String)
     }

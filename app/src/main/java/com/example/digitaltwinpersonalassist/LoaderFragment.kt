@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * Fragment sederhana yang menampilkan layar pemuatan (loader).
+ * Simple fragment that displays a loading screen (loader).
  *
- * Saat ini hanya meng-inflate layout `fragment_loader` dan mengembalikan view.
+ * Currently it only inflates the `fragment_loader` layout and returns the view.
  */
 class LoaderFragment : Fragment() {
 
     private lateinit var view : View
 
     /**
-     * Meng-inflate layout `fragment_loader`.
+     * Inflate the `fragment_loader` layout.
      */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

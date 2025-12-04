@@ -7,19 +7,19 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * Helper untuk membangun instance `Retrofit` yang terkonfigurasi dengan
- * logging interceptor, converter Gson, dan RxJava call adapter.
+ * Helper to build a configured `Retrofit` instance with a logging interceptor,
+ * Gson converter, and RxJava call adapter.
  *
- * Gunakan `getCLient()` untuk mendapatkan instance `Retrofit` yang siap pakai.
+ * Use `getCLient()` to obtain the configured `Retrofit` instance.
  */
 class ApiClient {
 
     private var retrofit: Retrofit? = null
 
     /**
-     * Mengembalikan instance `Retrofit` yang dikonfigurasi.
+     * Return the configured `Retrofit` instance.
      *
-     * @return Retrofit instance (tidak-null).
+     * @return Non-null Retrofit instance.
      */
     fun getCLient() : Retrofit
     {

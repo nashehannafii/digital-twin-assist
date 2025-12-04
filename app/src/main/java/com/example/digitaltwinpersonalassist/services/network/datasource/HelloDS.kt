@@ -1,23 +1,23 @@
 package com.example.digitaltwinpersonalassist.services.network.datasource
 
 /**
- * Abstraksi data source untuk endpoint "hello".
- * Implementor harus memanggil callback ketika data berhasil atau terjadi error.
+ * Abstraction for the "hello" data source.
+ * Implementors should invoke the callback when data is available or an error occurs.
  */
 interface HelloDS {
 
     /**
-     * Ambil data hello secara asinkron dan kembalikan hasil melalui callback.
+     * Fetch hello data asynchronously and return result via callback.
      */
     fun getData(callback: HelloCallback)
 
     interface HelloCallback{
         /**
-         * Dipanggil saat data berhasil diambil.
+         * Called when data is successfully loaded.
          */
         fun onLoaded(msg: String)
         /**
-         * Dipanggil saat terjadi error.
+         * Called when an error occurs.
          */
         fun onError(msg: String)
     }

@@ -10,18 +10,18 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 
 /**
- * Activity utama yang menampung navigasi bottom dan memuat fragment utama.
+ * Main activity that hosts the bottom navigation and loads the main fragments.
  *
- * Menggunakan `ChipNavigationBar` untuk berpindah antar fragment seperti
- * `HomeFragment`, `StatFragment`, `RecapFragment`, `ProfileFragment`, dan `LoaderFragment`.
+ * Uses `ChipNavigationBar` to switch between fragments such as
+ * `HomeFragment`, `StatFragment`, `RecapFragment`, `ProfileFragment`, and `LoaderFragment`.
  */
 class MainActivity : AppCompatActivity() {
 
     /**
-     * Inisialisasi activity: mengaktifkan edge-to-edge, men-setup menu bottom,
-     * dan memuat `HomeFragment` sebagai fragment awal.
+     * Activity initialization: enables edge-to-edge, sets up the bottom menu,
+     * and loads `HomeFragment` as the initial fragment.
      *
-     * @param savedInstanceState Bundle berisi status sebelumnya, atau null.
+     * @param savedInstanceState Bundle with previous state, or null.
      */
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +41,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Mengembalikan listener yang menangani pemilihan item di `ChipNavigationBar`.
-     * Listener ini mengganti fragment yang ditampilkan sesuai item yang dipilih.
+     * Return a listener that handles item selection on the `ChipNavigationBar`.
+     * The listener swaps the displayed fragment based on the selected item.
      *
-     * @return `ChipNavigationBar.OnItemSelectedListener` yang digunakan pada menu.
+     * @return `ChipNavigationBar.OnItemSelectedListener` used by the menu.
      */
     private fun navListener(): ChipNavigationBar.OnItemSelectedListener {
         return object : ChipNavigationBar.OnItemSelectedListener {
